@@ -1,20 +1,25 @@
 package cursoIntensivoJava;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SistemaNotas {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+
         int opcao;
 
         do {
-            System.out.println("\n===== MENU =====");
+            System.out.println("\n======== MENU ========");
             System.out.println("1. Calcular média de um aluno");
             System.out.println("2. Calcular médias de vários alunos");
             System.out.println("3. Sair");
+            System.out.println("======================");
             System.out.print("Escolha uma opção: ");
             opcao = input.nextInt();
+            input.nextLine(); 
+
 
             switch (opcao) {
                 case 1:
@@ -35,19 +40,41 @@ public class SistemaNotas {
     }
 
     public static void calcularMediaAluno(Scanner input) {
-        double media = notasDoAluno(input);
-        System.out.printf("A média do aluno é: %.1f%n", media);
-        System.out.println(verificacaoDeAprovacao(media));
+        String[] aluno = coletarDadosAluno(input);
+        String nome = aluno[0];
+        double media = Double.parseDouble(aluno[1]);
+
+        exibirResultadoAluno(nome, media);
     }
 
     public static void calcularMediaVariosAlunos(Scanner input) {
+        ArrayList<String> nomes = new ArrayList<>();
+        ArrayList<Double> medias = new ArrayList<>();
+
         System.out.print("Quantos alunos deseja calcular as médias? ");
         int quantidade = input.nextInt();
+        input.nextLine();
 
         for (int i = 1; i <= quantidade; i++) {
-            System.out.println("\nAluno " + i);
-            calcularMediaAluno(input);
+            System.out.println("\nNome do Aluno " + i + ": ");
+            String[] aluno = coletarDadosAluno(input); 
+            nomes.add(aluno[0]);
+            medias.add(Double.parseDouble(aluno[1])); 
         }
+
+        System.out.println("\n======================");
+        System.out.println("\n===== Resultados =====");
+        System.out.println("\n======================");
+        for (int i = 0; i < nomes.size(); i++) {
+            exibirResultadoAluno(nomes.get(i), medias.get(i)); 
+        }
+    }
+
+    public static String[] coletarDadosAluno(Scanner input) {
+        System.out.print("Digite o nome completo do aluno (nome e sobrenome): ");
+        String nome = input.nextLine().trim(); 
+        double media = notasDoAluno(input); 
+        return new String[] { nome, String.valueOf(media) };
     }
 
     public static double notasDoAluno(Scanner input) {
@@ -60,7 +87,13 @@ public class SistemaNotas {
         double nota;
         do {
             System.out.print(mensagem);
+            while (!input.hasNextDouble()) { 
+                System.out.println("Entrada inválida! Digite um número.");
+                System.out.print(mensagem);
+                input.next(); 
+            }
             nota = input.nextDouble();
+            input.nextLine(); 
             if (nota < 0 || nota > 10) {
                 System.out.println("Nota inválida! Digite um valor entre 0 e 10.");
             }
@@ -74,5 +107,9 @@ public class SistemaNotas {
         } else {
             return "Aluno reprovado!";
         }
+    }
+
+    public static void exibirResultadoAluno(String nome, double media) {
+        System.out.printf("Aluno: %s | Média: %.1f | %s%n", nome, media, verificacaoDeAprovacao(media));
     }
 }
