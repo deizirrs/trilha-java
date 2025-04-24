@@ -1,0 +1,35 @@
+# Ignorar diretórios de compilação
+/bin/
+/build/
+/out/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar configurações específicas de IDE
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.settings/
+.project
+.classpath
+
+# VS Code
+.vscode/
+
+# Ignorar arquivos compilados
+*.class
+
+# Ignorar arquivos temporários
+*.tmp
+*.bak
+*.swp
+
+# Ignorar arquivos gerados por testes
+/test-output/

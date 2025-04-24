@@ -1,4 +1,4 @@
-package edu.deiziane.primeirasemana.exercicios;
+package edu.deiziane.exercicios;
 
 import java.util.Scanner;
 
